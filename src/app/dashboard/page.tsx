@@ -1,8 +1,16 @@
 import { api } from "~/trpc/server";
 import CrudShowcase from "../_components/CrudShowcase";
 import { DeleteButton } from "../_components/DeleteBtn";
+import { getServerAuthSession } from "~/server/auth";
+import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
+  const session = await getServerAuthSession();
+
+  if (!session) {
+    redirect("/");
+  }
+
   const latestPost = await api.post.getAll();
 
   const renderAllPosts = latestPost.map((post) => {
@@ -14,6 +22,9 @@ export default async function Dashboard() {
         <div className="flex flex-row justify-between">
           <p className="text-center text-2xl font-bold">{post.name}</p>
           <DeleteButton id={post.id} />
+        </div>
+        <div className="py-3">
+          <p>By {post.createdBy.name}</p>
         </div>
         <div className="text-sm">
           {new Date(post.updatedAt).toLocaleString()}
