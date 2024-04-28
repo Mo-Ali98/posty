@@ -51,9 +51,15 @@ export default async function RootLayout({
 
                     <Link
                       href={"/api/auth/signout"}
-                      className="rounded-full bg-white/10 p-2 px-3 font-semibold no-underline transition hover:bg-white/20"
+                      className="ml-2 flex flex-row gap-3 rounded-full bg-white/10 p-2 px-3 font-semibold no-underline transition hover:bg-white/20"
                     >
                       <ArrowLeftEndOnRectangleIcon className="size-6" />
+                      {session.user.image && (
+                        <img
+                          src={session.user.image}
+                          className="size-6 rounded-sm"
+                        />
+                      )}
                     </Link>
                   </div>
                 )}
