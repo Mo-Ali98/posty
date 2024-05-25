@@ -5,6 +5,7 @@ import Link from "next/link";
 import { TRPCReactProvider } from "~/trpc/react";
 import { getServerAuthSession } from "~/server/auth";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,9 +38,9 @@ export default async function RootLayout({
               </Link>
               <div className="flex items-center font-bold text-white">
                 {session && (
-                  <div className="flex flex-row items-center gap-2">
+                  <div className="flex flex-row items-center gap-4">
                     <Link href="/">
-                      <p className="mr-4 text-white hover:text-[hsl(280,100%,70%)]">
+                      <p className="text-white hover:text-[hsl(280,100%,70%)]">
                         Home
                       </p>
                     </Link>
@@ -48,16 +49,23 @@ export default async function RootLayout({
                         Dashboard
                       </p>
                     </Link>
-
+                    <Link href="/pricing">
+                      <p className="text-white hover:text-[hsl(280,100%,70%)]">
+                        Pricing
+                      </p>
+                    </Link>
                     <Link
                       href={"/api/auth/signout"}
                       className="ml-2 flex flex-row gap-3 rounded-full bg-white/10 p-2 px-3 font-semibold no-underline transition hover:bg-white/20"
                     >
                       <ArrowLeftEndOnRectangleIcon className="size-6" />
                       {session.user.image && (
-                        <img
-                          src={session.user.image}
+                        <Image
+                          src={session.user?.image ?? ""}
                           className="size-6 rounded-sm"
+                          alt={session.user?.name ?? "Profile img"}
+                          width={24}
+                          height={24}
                         />
                       )}
                     </Link>
