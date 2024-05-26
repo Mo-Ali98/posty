@@ -12,6 +12,8 @@ const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
 
 const webhookSecret = env.STRIPE_WEBHOOK_SECRET;
 
+//TO TEST us ngrok ngrok http --domain=positively-ultimate-joey.ngrok-free.app 3000
+
 async function handleStripeWebhook(req: NextRequest) {
   if (req.method !== "POST") {
     return new NextResponse("Method Not Allowed", { status: 405 });
@@ -28,10 +30,19 @@ async function handleStripeWebhook(req: NextRequest) {
       throw new Error("Missing signature or webhook secret");
     }
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-  } catch (err: any) {
-    // Catching any error type
-    console.error(`Webhook signature verification failed. ${err.message}`);
-    return NextResponse.json({ error: err.message }, { status: 400 });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Webhook signature verification failed. ${error.message}`);
+      return new NextResponse(JSON.stringify({ error: error.message }), {
+        status: 400,
+      });
+    } else {
+      // Handle other types of errors
+      console.error("Webhook signature verification failed. Unknown error.");
+      return new NextResponse(JSON.stringify({ error: "Unknown error" }), {
+        status: 400,
+      });
+    }
   }
 
   const data = event.data;
@@ -42,7 +53,7 @@ async function handleStripeWebhook(req: NextRequest) {
       case "checkout.session.completed": {
         // First payment is successful and a subscription is created (if mode was set to "subscription" in ButtonCheckout)
         // ✅ Grant access to the product
-        const checkoutEventData = event.data.object as Stripe.Checkout.Session;
+        const checkoutEventData = event.data.object;
 
         console.log("Checkout session completed", data);
 
@@ -77,7 +88,7 @@ async function handleStripeWebhook(req: NextRequest) {
         // Ensure customerEmail and productName are non-null and non-undefined
 
         if (customerEmail && productName) {
-          const transaction = await createTransaction({
+          await createTransaction({
             email: customerEmail,
             plan: productName,
             stripeCustomerId,
@@ -101,9 +112,15 @@ async function handleStripeWebhook(req: NextRequest) {
       default:
         console.warn(`Unhandled event type: ${eventType}`);
     }
-  } catch (err: any) {
-    // Catching any error type
-    console.error(`Stripe error: ${err.message} | EVENT TYPE: ${eventType}`);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(
+        `Stripe error: ${error.message} | EVENT TYPE: ${eventType}`,
+      );
+    } else {
+      // Handle other types of errors
+      console.error(`Stripe error: Unknown error | EVENT TYPE: ${eventType}`);
+    }
   }
 
   return new NextResponse("Webhook event processed successfully", {

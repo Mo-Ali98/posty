@@ -11,7 +11,7 @@ import {
   Card,
 } from "../_components/card";
 import { Button, LinkButton } from "../_components/button";
-import { JSX, SVGProps } from "react";
+import type { JSX, SVGProps } from "react";
 
 export default async function PricingPage() {
   const plans = [

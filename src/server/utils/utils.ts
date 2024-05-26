@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { db } from "../db";
 
 async function createTransaction({
@@ -16,10 +15,26 @@ async function createTransaction({
     // Find the user based on their email
     const user = await db.user.findUnique({
       where: { email },
+      include: { accounts: true }, // Include related accounts
     });
 
     if (!user) {
       throw new Error("User not found");
+    }
+
+    // Get the first account associated with the user
+    const account = user.accounts[0];
+
+    if (!account) {
+      throw new Error("User account not found");
+    }
+
+    // Check if the account has a Stripe customer ID, and update if not
+    if (!account.stripeCustomerId) {
+      await db.account.update({
+        where: { id: account.id },
+        data: { stripeCustomerId },
+      });
     }
 
     // Create a new transaction record in the database
@@ -32,8 +47,13 @@ async function createTransaction({
     });
 
     return transaction;
-  } catch (error: any) {
-    throw new Error(`Failed to create transaction: ${error.message}`);
+  } catch (error) {
+    if (error instanceof Error) {
+      // Handle the error here
+      throw new Error(`Failed to create transaction: ${error.message}`);
+    } else {
+      throw new Error(`Failed to create transaction: Unknown error`);
+    }
   }
 }
 

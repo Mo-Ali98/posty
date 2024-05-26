@@ -66,6 +66,7 @@ const LinkButton = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       <Link
         className={classNames(buttonVariants({ variant, size, className }))}
         {...props}
+        ref={ref}
         href={href}
         target={target} // Explicitly pass the target prop
       >
