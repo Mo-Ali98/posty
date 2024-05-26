@@ -6,6 +6,8 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { getServerAuthSession } from "~/server/auth";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { Input } from "./_components/input";
+import { Button } from "./_components/button";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,19 +40,19 @@ export default async function RootLayout({
               </Link>
               <div className="flex items-center font-bold text-white">
                 {session && (
-                  <div className="flex flex-row items-center gap-4">
+                  <div className="flex flex-row items-center gap-4 sm:gap-6">
                     <Link href="/">
-                      <p className="text-white hover:text-[hsl(280,100%,70%)]">
+                      <p className="text-white underline-offset-4 hover:text-[hsl(280,100%,70%)] hover:underline">
                         Home
                       </p>
                     </Link>
                     <Link href="/dashboard">
-                      <p className="text-white hover:text-[hsl(280,100%,70%)]">
+                      <p className="text-white underline-offset-4 hover:text-[hsl(280,100%,70%)] hover:underline">
                         Dashboard
                       </p>
                     </Link>
                     <Link href="/pricing">
-                      <p className="text-white hover:text-[hsl(280,100%,70%)]">
+                      <p className="text-white underline-offset-4 hover:text-[hsl(280,100%,70%)] hover:underline">
                         Pricing
                       </p>
                     </Link>
@@ -82,7 +84,7 @@ export default async function RootLayout({
                 )}
               </div>
             </nav>
-            <main className="min-h-screen"> {children}</main>
+            <main className="flex-1"> {children}</main>
             <footer className="sticky bottom-0 py-2 text-center text-white">
               This is the footer. © {new Date().getFullYear()} My App. All
               rights reserved.
