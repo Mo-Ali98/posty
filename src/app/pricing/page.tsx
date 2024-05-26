@@ -1,5 +1,6 @@
 import { getServerAuthSession } from "~/server/auth";
 import { redirect } from "next/navigation";
+import { api } from "~/trpc/server";
 
 import {
   CardTitle,
@@ -58,6 +59,10 @@ export default async function PricingPage() {
     redirect("/");
   }
 
+  const billing = await api.billing.getBillingDataByUserId({
+    userId: session.user.id,
+  });
+
   return (
     <div className="flex flex-col items-center justify-center gap-12 p-4 text-white">
       <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
@@ -97,16 +102,21 @@ export default async function PricingPage() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <LinkButton
-                    href={
-                      plans[0]?.link +
-                      "?prefilled_email=" +
-                      session?.user?.email
-                    }
-                    text="Get Started"
-                    className="w-full"
-                    target="_blank"
-                  />
+                  {billing?.plan !== "Basic" ? (
+                    <LinkButton
+                      href={
+                        plans[0]?.link +
+                        "?prefilled_email=" +
+                        session?.user?.email
+                      }
+                      text="Get Started"
+                      className="w-full"
+                    />
+                  ) : (
+                    <Button className="w-full" disabled>
+                      Active
+                    </Button>
+                  )}
                 </CardFooter>
               </Card>
               <Card className="relative  border-2 border-purple-500">
@@ -141,16 +151,21 @@ export default async function PricingPage() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <LinkButton
-                    href={
-                      plans[1]?.link +
-                      "?prefilled_email=" +
-                      session?.user?.email
-                    }
-                    text="Get Started"
-                    className="animated-background 0 w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-700 hover:to-purple-700"
-                    target="_blank"
-                  />
+                  {billing?.plan !== "Pro" ? (
+                    <LinkButton
+                      href={
+                        plans[1]?.link +
+                        "?prefilled_email=" +
+                        session?.user?.email
+                      }
+                      text="Get Started"
+                      className="animated-background 0 w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-700 hover:to-purple-700"
+                    />
+                  ) : (
+                    <Button className="w-full" disabled>
+                      Active
+                    </Button>
+                  )}
                 </CardFooter>
               </Card>
               <Card>
@@ -182,16 +197,21 @@ export default async function PricingPage() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <LinkButton
-                    href={
-                      plans[2]?.link +
-                      "?prefilled_email=" +
-                      session?.user?.email
-                    }
-                    text="Get Started"
-                    className="w-full"
-                    target="_blank"
-                  />{" "}
+                  {billing?.plan !== "Enterprise" ? (
+                    <LinkButton
+                      href={
+                        plans[2]?.link +
+                        "?prefilled_email=" +
+                        session?.user?.email
+                      }
+                      text="Get Started"
+                      className="w-full"
+                    />
+                  ) : (
+                    <Button className="w-full" disabled>
+                      Active
+                    </Button>
+                  )}
                 </CardFooter>
               </Card>
             </div>
