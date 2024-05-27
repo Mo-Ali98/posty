@@ -122,8 +122,47 @@ async function getEmailByStripeCustomerId(
   return account?.user?.email ?? null;
 }
 
+function hasReachedLimit({
+  currentPosts,
+  currentPlan,
+}: {
+  currentPosts: number;
+  currentPlan: string;
+}) {
+  switch (currentPlan) {
+    case "Basic":
+      if (currentPosts < 9) {
+        return true;
+      } else {
+        return false;
+      }
+
+    case "Pro":
+      if (currentPosts < 29) {
+        return true;
+      } else {
+        return false;
+      }
+
+    case "Enterprise":
+      if (currentPosts < 99) {
+        return true;
+      } else {
+        return false;
+      }
+
+    default:
+      if (currentPosts < 1) {
+        return true;
+      } else {
+        return false;
+      }
+  }
+}
+
 export {
   createTransaction,
   getEmailByStripeCustomerId,
   handleSubscriptionDeleted,
+  hasReachedLimit,
 };

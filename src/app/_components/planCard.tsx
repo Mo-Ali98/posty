@@ -1,6 +1,7 @@
+import { SVGProps } from "react";
+import classNames from "classnames";
 import { getServerAuthSession } from "~/server/auth";
 import { redirect } from "next/navigation";
-
 import { LinkButton, Button } from "./button";
 import {
   Card,
@@ -10,8 +11,6 @@ import {
   CardContent,
   CardFooter,
 } from "./card";
-import { SVGProps } from "react";
-import classNames from "classnames";
 
 type Plan = {
   link: string;
@@ -19,18 +18,21 @@ type Plan = {
   price: number;
   duration: string;
   name: string;
+  description: string;
 };
 
 type PlanCardProps = {
   plan: Plan;
   isActive: boolean;
   isFeatured: boolean;
+  hasActiveSub: boolean;
 };
 
 export const PlanCard: React.FC<PlanCardProps> = async ({
   plan,
   isActive,
   isFeatured,
+  hasActiveSub,
 }) => {
   const session = await getServerAuthSession();
 
@@ -54,9 +56,7 @@ export const PlanCard: React.FC<PlanCardProps> = async ({
         <CardTitle className="text-xl text-[hsl(280,100%,70%)]">
           {plan.name}
         </CardTitle>
-        <CardDescription>
-          Ideal for growing teams and small businesses.
-        </CardDescription>
+        <CardDescription>{plan.description}</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="text-4xl font-bold text-[hsl(280,100%,70%)]">
@@ -65,37 +65,55 @@ export const PlanCard: React.FC<PlanCardProps> = async ({
         <div className="grid gap-2">
           <div className="flex items-center gap-2">
             <CheckIcon />
-            <span>5 users</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CheckIcon />
-            <span>50 GB storage</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CheckIcon />
-            <span>Advanced features</span>
+            <span>{plan.price} Posts</span>
           </div>
         </div>
       </CardContent>
       <CardFooter>
-        {!isActive ? (
-          <LinkButton
-            href={plan.link + "?prefilled_email=" + session?.user?.email}
-            text="Get Started"
-            className={classNames("w-full", {
-              "animated-background 0 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-700 hover:to-purple-700":
-                isFeatured,
-            })}
-          />
-        ) : (
-          <Button className="w-full" disabled>
-            Active
-          </Button>
-        )}
+        <PlanButton
+          isFeatured={isFeatured}
+          isActive={isActive}
+          hasActiveSub={hasActiveSub}
+          link={plan.link + "?prefilled_email=" + session?.user?.email}
+        />
       </CardFooter>
     </Card>
   );
 };
+
+function PlanButton({
+  isFeatured,
+  isActive,
+  hasActiveSub,
+  link,
+}: {
+  isFeatured: boolean;
+  isActive: boolean;
+  hasActiveSub: boolean;
+  link: string;
+}) {
+  if (isActive) {
+    return (
+      <Button className="w-full" disabled>
+        Active
+      </Button>
+    );
+  }
+
+  if (hasActiveSub)
+    return <LinkButton className="w-full" href="/" text=" Contact sales" />;
+
+  return (
+    <LinkButton
+      href={link}
+      text="Get Started"
+      className={classNames("w-full", {
+        "animated-background 0 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-700 hover:to-purple-700":
+          isFeatured,
+      })}
+    />
+  );
+}
 
 function CheckIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (

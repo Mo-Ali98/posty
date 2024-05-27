@@ -1,5 +1,5 @@
 import { api } from "~/trpc/server";
-import CrudShowcase from "../_components/CrudShowcase";
+import PostCreation from "../_components/CrudShowcase";
 import { DeleteButton } from "../_components/DeleteBtn";
 import { getServerAuthSession } from "~/server/auth";
 import { redirect } from "next/navigation";
@@ -46,7 +46,7 @@ export default async function Dashboard() {
       <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
         <span className="text-[hsl(280,100%,70%)]">Dashboard</span>
       </h1>
-      <CrudShowcase />
+      <PostCreation />
       <h2 className="text-3xl font-bold underline">Posts</h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
         {renderAllPosts}

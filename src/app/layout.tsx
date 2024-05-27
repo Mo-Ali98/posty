@@ -82,7 +82,7 @@ export default async function RootLayout({
                 )}
               </div>
             </nav>
-            <main className="flex-1"> {children}</main>
+            <main className="min-h-screen"> {children}</main>
             <footer className="sticky bottom-0 py-2 text-center text-white">
               This is the footer. © {new Date().getFullYear()} My App. All
               rights reserved.

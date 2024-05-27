@@ -18,7 +18,11 @@ import { Label } from "./label";
 import { Input } from "./input";
 import { Textarea } from "./textarea";
 
-export function CreatePost() {
+interface CreatePost {
+  disabled?: boolean;
+}
+
+export function CreatePost({ disabled }: CreatePost) {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -70,7 +74,7 @@ export function CreatePost() {
           </div>
         </CardContent>
         <CardFooter className="flex justify-end">
-          <Button type="submit" disabled={createPost.isPending}>
+          <Button type="submit" disabled={createPost.isPending || disabled}>
             {createPost.isPending ? "Submitting..." : "Submit"}
           </Button>
         </CardFooter>

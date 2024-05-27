@@ -9,6 +9,7 @@ export default async function PricingPage() {
   const plans = [
     {
       name: "Basic",
+      description: "Perfect for individuals and small teams.",
       link:
         process.env.NODE_ENV === "development"
           ? "https://buy.stripe.com/test_3cs9Dg9F5gV09ywcMM"
@@ -22,6 +23,8 @@ export default async function PricingPage() {
     },
     {
       name: "Pro",
+      description: "Ideal for growing teams and small businesses.",
+
       link:
         process.env.NODE_ENV === "development"
           ? "https://buy.stripe.com/test_aEU16K8B15cibGEaEG"
@@ -35,6 +38,8 @@ export default async function PricingPage() {
     },
     {
       name: "Enterprise",
+      description: "Tailored for large teams and organizations.",
+
       link:
         process.env.NODE_ENV === "development"
           ? "https://buy.stripe.com/test_00gbLo8B17kq5ig6op"
@@ -57,7 +62,6 @@ export default async function PricingPage() {
   const billing = await api.billing.getBillingDataByUserId({
     userId: session.user.id,
   });
-  console.log(plans, billing);
 
   return (
     <div className="flex flex-col items-center justify-center gap-12 p-4 text-white">
@@ -75,6 +79,7 @@ export default async function PricingPage() {
                   plan={plan}
                   isActive={plan.name === billing?.plan}
                   isFeatured={plan.name === "Pro"}
+                  hasActiveSub={Boolean(billing)}
                 />
               ))}
             </div>
