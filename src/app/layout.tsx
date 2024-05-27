@@ -6,8 +6,6 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { getServerAuthSession } from "~/server/auth";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { Input } from "./_components/input";
-import { Button } from "./_components/button";
 
 const inter = Inter({
   subsets: ["latin"],

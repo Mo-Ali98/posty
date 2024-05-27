@@ -4,7 +4,11 @@ import Stripe from "stripe";
 import { env } from "~/env"; // Ensure this import is correct and env is typed
 import { type NextRequest } from "next/server";
 
-import { createTransaction } from "../../../../server/utils/utils";
+import {
+  createTransaction,
+  getEmailByStripeCustomerId,
+  handleSubscriptionDeleted,
+} from "../../../../server/utils/utils";
 // Initialize Stripe
 const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
   apiVersion: "2024-04-10",
@@ -106,6 +110,27 @@ async function handleStripeWebhook(req: NextRequest) {
         // ❌ Revoke access to the product
         // The customer might have changed the plan (higher or lower plan, cancel soon etc...)
         console.log("Subscription deleted", data);
+
+        const subscriptionEventData = event.data.object;
+
+        const stripeCustomerId = subscriptionEventData.customer as string;
+        const stripeSubscriptionId = subscriptionEventData.id;
+
+        const customerEmail =
+          await getEmailByStripeCustomerId(stripeCustomerId);
+        if (!customerEmail) {
+          console.log("Customer email not found.");
+          return NextResponse.json(
+            { error: "Customer email not found" },
+            { status: 400 },
+          );
+        }
+
+        await handleSubscriptionDeleted({
+          email: customerEmail,
+          stripeCustomerId,
+          stripeSubscriptionId,
+        });
         break;
       }
 
