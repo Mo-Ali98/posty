@@ -1,25 +1,22 @@
 import { CreatePost } from "~/app/_components/create-post";
-import { api } from "~/trpc/server";
 import { getServerAuthSession } from "~/server/auth";
+import { hasReachedLimit } from "~/server/utils/utils";
+import { api } from "~/trpc/server";
 
-export default async function CrudShowcase() {
+export default async function PostCreation() {
   const session = await getServerAuthSession();
   if (!session?.user) return null;
-  const latestPost = await api.post.getLatest();
 
-  return (
-    <div className="flex w-full max-w-xs flex-col gap-4">
-      <div className="rounded-md bg-white/10 p-5">
-        {latestPost ? (
-          <p className="mb-2 truncate">
-            Your most recent post: {latestPost.name}
-          </p>
-        ) : (
-          <p className="mb-2">You have no posts yet.</p>
-        )}
+  const latestPost = await api.post.getAll();
 
-        <CreatePost />
-      </div>
-    </div>
-  );
+  const billing = await api.billing.getBillingDataByUserId({
+    userId: session.user.id,
+  });
+
+  const canPost = hasReachedLimit({
+    currentPosts: latestPost.length,
+    currentPlan: billing?.plan ?? "",
+  });
+
+  return <CreatePost disabled={!canPost} />;
 }
