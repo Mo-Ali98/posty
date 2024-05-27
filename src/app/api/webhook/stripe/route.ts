@@ -118,6 +118,7 @@ async function handleStripeWebhook(req: NextRequest) {
 
         const customerEmail =
           await getEmailByStripeCustomerId(stripeCustomerId);
+
         if (!customerEmail) {
           console.log("Customer email not found.");
           return NextResponse.json(
