@@ -16,7 +16,6 @@ export function Speech({ setDescription }: SpeechProps) {
   const {
     transcript,
     listening,
-    resetTranscript,
     browserSupportsSpeechRecognition,
     isMicrophoneAvailable,
   } = useSpeechRecognition();
@@ -42,11 +41,11 @@ export function Speech({ setDescription }: SpeechProps) {
     setDescription(transcript);
   }
 
-  const handleToggleListening = () => {
+  const handleToggleListening = async () => {
     if (listening) {
-      SpeechRecognition.stopListening();
+      await SpeechRecognition.stopListening();
     } else {
-      SpeechRecognition.startListening({ continuous: true });
+      await SpeechRecognition.startListening({ continuous: true });
     }
   };
 
@@ -60,7 +59,7 @@ export function Speech({ setDescription }: SpeechProps) {
           "absolute right-3 top-1/2 -translate-y-1/2 text-gray-500",
           { "text-red-500": listening },
         )}
-        onClick={handleToggleListening}
+        onClick={() => handleToggleListening()}
       >
         <MicrophoneIcon className="h-5 w-5" />
       </Button>

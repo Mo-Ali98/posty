@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import type { SVGProps } from "react";
 import classNames from "classnames";
 import { getServerAuthSession } from "~/server/auth";
 import { redirect } from "next/navigation";

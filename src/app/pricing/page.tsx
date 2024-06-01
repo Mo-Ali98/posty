@@ -2,7 +2,6 @@ import { getServerAuthSession } from "~/server/auth";
 import { redirect } from "next/navigation";
 import { api } from "~/trpc/server";
 
-import type { JSX, SVGProps } from "react";
 import { PlanCard } from "../_components/planCard";
 
 export default async function PricingPage() {
