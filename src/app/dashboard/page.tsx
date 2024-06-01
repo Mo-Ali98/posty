@@ -11,8 +11,6 @@ import {
   CardFooter,
 } from "../_components/card";
 
-import { Speech } from "../_components/speech";
-
 export default async function Dashboard() {
   const session = await getServerAuthSession();
 

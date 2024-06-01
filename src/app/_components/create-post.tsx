@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
 import { api } from "~/trpc/react";
 import { Button } from "./button";
 import {
@@ -16,7 +17,6 @@ import { Label } from "./label";
 
 import { Input } from "./input";
 import { Textarea } from "./textarea";
-import { Speech } from "./speech";
 
 interface CreatePost {
   disabled?: boolean;
@@ -64,16 +64,13 @@ export function CreatePost({ disabled }: CreatePost) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
-            <div className="relative">
-              <Textarea
-                className="min-h-[300px]"
-                id="content"
-                placeholder="Write your entry in Markdown"
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
-              />
-              <Speech setDescription={setDesc} />
-            </div>
+            <Textarea
+              className="min-h-[300px]"
+              id="content"
+              placeholder="Write your entry in Markdown"
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+            />
           </div>
         </CardContent>
         <CardFooter className="flex justify-end">
