@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { api } from "~/trpc/server";
 
 import { PlanCard } from "../_components/planCard";
+import GradualSpacing from "../_components/text-animation";
 
 export default async function PricingPage() {
   const plans = [
@@ -64,9 +65,10 @@ export default async function PricingPage() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-12 p-4 text-white">
-      <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-        <span className="text-[hsl(280,100%,70%)]">Pricing</span>
-      </h1>
+      <GradualSpacing
+        className="font-display text-center text-4xl font-bold tracking-[-0.1em] text-[hsl(280,100%,70%)] md:text-7xl md:leading-[5rem] "
+        text={`Pricing`}
+      />
 
       <section className="py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
