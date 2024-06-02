@@ -3,7 +3,7 @@ import PostCreation from "../_components/CrudShowcase";
 import { getServerAuthSession } from "~/server/auth";
 import { redirect } from "next/navigation";
 import { Card, CardContent } from "../_components/card";
-import { JSX, SVGProps } from "react";
+import type { JSX, SVGProps } from "react";
 import GradualSpacing from "../_components/text-animation";
 
 export default async function Dashboard() {

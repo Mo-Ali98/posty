@@ -17,6 +17,13 @@ import { Label } from "./label";
 import { Input } from "./input";
 import { Textarea } from "./textarea";
 import { Speech } from "./speech";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./tooltip";
+import Link from "next/link";
 
 interface CreatePost {
   disabled?: boolean;
@@ -77,9 +84,30 @@ export function CreatePost({ disabled }: CreatePost) {
           </div>
         </CardContent>
         <CardFooter className="flex justify-end">
-          <Button type="submit" disabled={createPost.isPending || disabled}>
-            {createPost.isPending ? "Submitting..." : "Submit"}
-          </Button>
+          {disabled ? (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button type="button" disabled={disabled}>
+                    Submit
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <p className="text-sm">
+                    You have reached the limit! <br /> Please{" "}
+                    <Link href="/pricing" className="underline">
+                      upgrade
+                    </Link>{" "}
+                    to continue posting
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          ) : (
+            <Button type="submit" disabled={createPost.isPending || disabled}>
+              {createPost.isPending ? "Submitting..." : "Submit"}
+            </Button>
+          )}
         </CardFooter>
       </Card>
     </form>
