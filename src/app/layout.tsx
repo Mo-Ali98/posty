@@ -1,6 +1,7 @@
 import "~/styles/globals.css";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
@@ -31,6 +32,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <SpeedInsights />
+      <Analytics />
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider>
           <div className="min-h-screen bg-gradient-to-b from-[#2e026d] to-[#15162c]">
