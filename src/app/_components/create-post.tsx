@@ -24,6 +24,7 @@ import {
   TooltipTrigger,
 } from "./tooltip";
 import Link from "next/link";
+import { Confetti } from "./confetti";
 
 interface CreatePost {
   disabled?: boolean;
@@ -36,9 +37,13 @@ export function CreatePost({ disabled }: CreatePost) {
 
   const createPost = api.post.create.useMutation({
     onSuccess: () => {
-      router.refresh();
-      setTitle("");
-      setDesc("");
+      Confetti({ particleCount: 200, spread: 100 });
+
+      setTimeout(() => {
+        router.refresh();
+        setTitle("");
+        setDesc("");
+      }, 500);
     },
   });
 
@@ -104,7 +109,15 @@ export function CreatePost({ disabled }: CreatePost) {
               </Tooltip>
             </TooltipProvider>
           ) : (
-            <Button type="submit" disabled={createPost.isPending || disabled}>
+            <Button
+              type="submit"
+              disabled={
+                createPost.isPending ||
+                disabled ||
+                title.length < 1 ||
+                desc.length < 1
+              }
+            >
               {createPost.isPending ? "Submitting..." : "Submit"}
             </Button>
           )}
