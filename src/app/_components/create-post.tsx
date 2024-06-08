@@ -36,8 +36,8 @@ export function CreatePost({ disabled }: CreatePost) {
   const [desc, setDesc] = useState("");
 
   const createPost = api.post.create.useMutation({
-    onSuccess: () => {
-      Confetti({ particleCount: 200, spread: 100 });
+    onSuccess: async () => {
+      await Confetti({ particleCount: 200, spread: 100 });
 
       setTimeout(() => {
         router.refresh();

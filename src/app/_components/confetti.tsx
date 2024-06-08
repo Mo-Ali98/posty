@@ -21,7 +21,7 @@ interface ConfettiOptions extends confetti.Options {
   scalar?: number;
 }
 
-const Confetti = (options: ConfettiOptions) => {
+const Confetti = async (options: ConfettiOptions) => {
   if (
     options.disableForReducedMotion &&
     window.matchMedia("(prefers-reduced-motion)").matches
@@ -36,7 +36,7 @@ const Confetti = (options: ConfettiOptions) => {
       })
     : confetti;
 
-  confettiInstance({
+  await confettiInstance({
     ...options,
   });
 };
