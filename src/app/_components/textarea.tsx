@@ -1,6 +1,6 @@
+import classNames from "classnames";
 import * as React from "react";
 
-import classNames from "classnames";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}

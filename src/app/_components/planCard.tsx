@@ -1,7 +1,8 @@
-import type { SVGProps } from "react";
 import classNames from "classnames";
-import { getServerAuthSession } from "~/server/auth";
 import { redirect } from "next/navigation";
+
+import { getServerAuthSession } from "~/server/auth";
+
 import { LinkButton, Button } from "./button";
 import {
   Card,
@@ -11,6 +12,7 @@ import {
   CardContent,
   CardFooter,
 } from "./card";
+import { CheckIcon } from "./icons";
 
 type Plan = {
   link: string;
@@ -81,7 +83,7 @@ export const PlanCard: React.FC<PlanCardProps> = async ({
   );
 };
 
-function PlanButton({
+export function PlanButton({
   isFeatured,
   isActive,
   hasActiveSub,
@@ -112,25 +114,5 @@ function PlanButton({
           isFeatured,
       })}
     />
-  );
-}
-
-function CheckIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      className="text-[hsl(280,100%,70%)]"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M20 6 9 17l-5-5" />
-    </svg>
   );
 }

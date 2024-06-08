@@ -1,8 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
 import { ArrowUpIcon } from "@heroicons/react/24/solid";
-import { Button } from "./button";
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+
+import { Button } from "./button";
+
 
 export default function ArrowUpBtn() {
   const [showButton, setShowButton] = useState(false);

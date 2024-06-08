@@ -1,8 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { api } from "~/trpc/react";
 import { TrashIcon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/navigation";
+
+import { api } from "~/trpc/react";
+
 import { LoadingSpinner } from "./loading";
 
 type ButtonProps = {

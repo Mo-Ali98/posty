@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { api } from "~/trpc/server";
-import PostCreation from "../_components/CrudShowcase";
-import { getServerAuthSession } from "~/server/auth";
 import { redirect } from "next/navigation";
+
+import { getServerAuthSession } from "~/server/auth";
+import { api } from "~/trpc/server";
+
 import { Card, CardContent } from "../_components/card";
-import GradualSpacing from "../_components/text-animation";
+import PostCreation from "../_components/CrudShowcase";
 import { CalendarIcon, UserIcon } from "../_components/icons";
+import GradualSpacing from "../_components/text-animation";
 
 export default async function Dashboard() {
   const session = await getServerAuthSession();

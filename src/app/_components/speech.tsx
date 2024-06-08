@@ -1,12 +1,14 @@
 import "regenerator-runtime/runtime";
 
+import { MicrophoneIcon } from "@heroicons/react/24/solid";
+import classNames from "classnames";
+import { useEffect, useState } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { useEffect, useState } from "react";
+
 import { Button } from "./button";
-import { MicrophoneIcon } from "@heroicons/react/24/solid";
-import classNames from "classnames";
+
 
 interface SpeechProps {
   setDescription: (desc: string) => void;

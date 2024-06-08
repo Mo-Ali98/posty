@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+
 import ArrowUpBtn from "~/app/_components/arrow-up";
 import { Card } from "~/app/_components/card";
 import { CalendarIcon, UserIcon } from "~/app/_components/icons";
