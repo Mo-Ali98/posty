@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
