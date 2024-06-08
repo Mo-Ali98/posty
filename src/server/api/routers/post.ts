@@ -59,4 +59,19 @@ export const postRouter = createTRPCRouter({
       },
     });
   }),
+
+  getSinglePost: protectedProcedure
+    .input(z.object({ id: z.string().min(1) }))
+    .query(({ ctx, input }) => {
+      return ctx.db.post.findUnique({
+        where: { id: Number(input.id) },
+        include: {
+          createdBy: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+    }),
 });

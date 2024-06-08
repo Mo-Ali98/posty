@@ -9,7 +9,7 @@ export default async function Home() {
       <div className="container flex flex-col justify-center gap-12 px-4">
         <GradualSpacing
           className="font-display text-center text-4xl font-bold tracking-[-0.1em] text-black md:text-7xl md:leading-[5rem] dark:text-white"
-          text={`Welcome back, ${session?.user?.name}`}
+          text={`Welcome, ${session?.user?.name}`}
         />
       </div>
     </main>
