@@ -28,6 +28,7 @@
     "@trpc/client": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
+    "@vercel/speed-insights": "^1.0.11",
     "canvas-confetti": "^1.9.3",
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.5.1",
