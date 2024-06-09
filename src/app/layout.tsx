@@ -11,6 +11,14 @@ import { TRPCReactProvider } from "~/trpc/react";
 
 import { FeatherIcon } from "./_components/icons";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./_components/dropdown";
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -44,35 +52,49 @@ export default async function RootLayout({
                 {session && (
                   <div className="flex flex-row items-center gap-4 sm:gap-6">
                     <Link href="/">
-                      <p className="text-white underline-offset-4 hover:text-[hsl(280,100%,70%)] hover:underline">
+                      <p className="text-xs text-white underline-offset-4 hover:text-[hsl(280,100%,70%)] hover:underline sm:text-lg">
                         Home
                       </p>
                     </Link>
+
                     <Link href="/dashboard">
-                      <p className="text-white underline-offset-4 hover:text-[hsl(280,100%,70%)] hover:underline">
+                      <p className="text-xs text-white underline-offset-4 hover:text-[hsl(280,100%,70%)] hover:underline sm:text-lg">
                         Dashboard
                       </p>
                     </Link>
                     <Link href="/pricing">
-                      <p className="text-white underline-offset-4 hover:text-[hsl(280,100%,70%)] hover:underline">
+                      <p className="text-xs text-white underline-offset-4 hover:text-[hsl(280,100%,70%)] hover:underline sm:text-lg">
                         Pricing
                       </p>
                     </Link>
-                    <Link
-                      href={"/api/auth/signout"}
-                      className="ml-2 flex flex-row gap-3 rounded-full bg-white/10 p-2 px-3 font-semibold no-underline transition hover:bg-white/20"
-                    >
-                      <ArrowLeftEndOnRectangleIcon className="size-6" />
-                      {session.user.image && (
-                        <Image
-                          src={session.user?.image ?? ""}
-                          className="size-6 rounded-sm"
-                          alt={session.user?.name ?? "Profile img"}
-                          width={24}
-                          height={24}
-                        />
-                      )}
-                    </Link>
+
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <div className="items-center p-2 hover:scale-110">
+                          {session.user.image && (
+                            <Image
+                              src={session.user?.image ?? ""}
+                              className="size-6 rounded-sm"
+                              alt={session.user?.name ?? "Profile img"}
+                              width={24}
+                              height={24}
+                            />
+                          )}
+                          <span className="sr-only">Toggle user menu</span>
+                        </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        align="end"
+                        className="mt-1 bg-white p-1"
+                      >
+                        <Link href={"/api/auth/signout"}>
+                          <DropdownMenuItem className="hover:cursor-pointer hover:bg-gray-300">
+                            <ArrowLeftEndOnRectangleIcon className="mr-1 size-6" />
+                            Logout
+                          </DropdownMenuItem>
+                        </Link>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 )}
 
