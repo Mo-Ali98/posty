@@ -9,15 +9,14 @@ import Link from "next/link";
 import { getServerAuthSession } from "~/server/auth";
 import { TRPCReactProvider } from "~/trpc/react";
 
-import { FeatherIcon } from "./_components/icons";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./_components/dropdown";
+import { FeatherIcon } from "./_components/icons";
+
 
 const inter = Inter({
   subsets: ["latin"],
