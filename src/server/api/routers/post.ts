@@ -77,4 +77,12 @@ export const postRouter = createTRPCRouter({
         },
       });
     }),
+
+  getPostsByUserId: protectedProcedure
+    .input(z.object({ userId: z.string().min(1) }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.post.findMany({
+        where: { createdById: input.userId },
+      });
+    }),
 });

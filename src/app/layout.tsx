@@ -15,7 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./_components/dropdown";
-import { FeatherIcon } from "./_components/icons";
+import { FeatherIcon, UserIcon } from "./_components/icons";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -85,9 +85,16 @@ export default async function RootLayout({
                         align="end"
                         className="mt-1 bg-white p-1"
                       >
+                        <Link href={"/profile"}>
+                          <DropdownMenuItem className="hover:cursor-pointer hover:bg-gray-300">
+                            <UserIcon className="mr-2 size-6" />
+                            Profile
+                          </DropdownMenuItem>
+                        </Link>
+
                         <Link href={"/api/auth/signout"}>
                           <DropdownMenuItem className="hover:cursor-pointer hover:bg-gray-300">
-                            <ArrowLeftEndOnRectangleIcon className="mr-1 size-6" />
+                            <ArrowLeftEndOnRectangleIcon className="mr-2 size-6" />
                             Logout
                           </DropdownMenuItem>
                         </Link>
