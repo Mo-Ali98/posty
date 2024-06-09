@@ -261,11 +261,15 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col justify-center gap-12 px-4">
+    <main className="flex min-h-screen flex-col items-center justify-center text-white">
+      <div className="container flex flex-col justify-center gap-4 px-4">
         <GradualSpacing
-          className="font-display text-center text-4xl font-bold tracking-[-0.1em] text-black md:text-7xl md:leading-[5rem] dark:text-white"
-          text={`Welcome, ${session?.user?.name}`}
+          className="font-display text-center text-2xl font-bold tracking-[-0.1em] text-black md:text-7xl md:leading-[5rem] dark:text-white"
+          text={`Welcome`}
+        />
+        <GradualSpacing
+          className="font-display text-center text-2xl font-bold tracking-[-0.1em] text-black md:text-7xl md:leading-[5rem] dark:text-white"
+          text={`${session?.user?.name}`}
         />
       </div>
     </main>

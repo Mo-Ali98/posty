@@ -17,7 +17,6 @@ import {
 } from "./_components/dropdown";
 import { FeatherIcon } from "./_components/icons";
 
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -43,7 +42,7 @@ export default async function RootLayout({
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider>
           <div className="min-h-screen bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-            <nav className="sticky top-0 flex items-center justify-between p-4 shadow backdrop-blur-sm">
+            <nav className="sticky top-0 z-10 flex items-center justify-between bg-[#2e026d] p-4 shadow">
               <Link href="/" className="flex items-center">
                 <FeatherIcon className="h-6 w-6 text-[hsl(280,100%,70%)]" />
               </Link>

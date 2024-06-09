@@ -38,13 +38,11 @@ export function CreatePost({ disabled }: CreatePost) {
 
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
-      await Confetti({ particleCount: 200, spread: 100 });
+      setTitle("");
+      setDesc("");
 
-      setTimeout(() => {
-        router.refresh();
-        setTitle("");
-        setDesc("");
-      }, 500);
+      await Confetti({ particleCount: 200, spread: 100 });
+      router.refresh();
     },
   });
 

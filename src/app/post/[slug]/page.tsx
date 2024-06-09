@@ -14,20 +14,22 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div>
+    <div className="p-4">
       <Card className="mx-auto mt-5 max-w-3xl p-6 sm:p-6 md:p-8 lg:p-10">
         <div className="not-prose space-y-4">
           <h1 className="text-3xl font-bold tracking-tight text-[hsl(280,100%,70%)] lg:text-4xl">
             {post.title}
           </h1>
           <div className="flex flex-col gap-2">
-            <p className="flex items-center gap-2 text-black">
+            <p className="sm:text-md flex items-center gap-2 text-xs text-black">
               <CalendarIcon className="inline-block h-4 w-4 text-[hsl(280,100%,70%)]" />
               Published on {new Date(post.updatedAt).toDateString()}
             </p>
             <div className="flex items-center gap-2">
               <UserIcon className="inline-block h-4 w-4 text-[hsl(280,100%,70%)]" />
-              <p className="text-black">By {post.createdBy.name}</p>
+              <p className="sm:text-md text-xs text-black">
+                By {post.createdBy.name}
+              </p>
             </div>
           </div>
         </div>
