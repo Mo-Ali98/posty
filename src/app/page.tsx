@@ -13,6 +13,7 @@ import {
   CardDescription,
 } from "./_components/card";
 import { CheckIcon } from "./_components/icons";
+import { MarqueeDemo } from "./_components/marquee";
 import { PlanButton } from "./_components/planCard";
 import GradualSpacing from "./_components/text-animation";
 import placeholder from "../assets/placeholder.svg";
@@ -59,7 +60,7 @@ export default async function Home() {
   if (!session) {
     return (
       <main className="flex-1">
-        <section className="w-full pt-12 md:pt-24 lg:pt-32">
+        <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="space-y-10 px-4 md:px-6 xl:space-y-16">
             <div className="mx-auto grid max-w-[1300px] gap-4 px-4 sm:px-6 md:grid-cols-2 md:gap-16 md:px-10">
               <div>
@@ -165,6 +166,28 @@ export default async function Home() {
                   tools for a seamless experience.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="w-full py-12 md:py-24 lg:py-32">
+          <div className="space-y-12 px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h1 className="lg:leading-tighter my-2 text-3xl font-bold tracking-tighter text-[hsl(280,100%,70%)] sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
+                  Testimonials
+                </h1>
+                <h2 className="text-3xl font-bold tracking-tighter text-white sm:text-5xl">
+                  What Our Users Say
+                </h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  Hear from our satisfied customers about their experience with
+                  Thought Sharing.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto max-w-5xl">
+              <MarqueeDemo />
             </div>
           </div>
         </section>
