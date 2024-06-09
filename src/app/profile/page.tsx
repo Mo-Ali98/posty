@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { getServerAuthSession } from "~/server/auth";
+import { api } from "~/trpc/server";
 
 import { Avatar, AvatarImage } from "../_components/avatar";
 import { Button } from "../_components/button";
@@ -12,14 +13,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../_components/card";
-import {
-  CalendarIcon,
-  MessageCircleIcon,
-  StarIcon,
-} from "../_components/icons";
+import { MessageCircleIcon } from "../_components/icons";
 import { Input } from "../_components/input";
 import { Label } from "../_components/label";
-import { api } from "~/trpc/server";
 import {
   Tooltip,
   TooltipContent,
