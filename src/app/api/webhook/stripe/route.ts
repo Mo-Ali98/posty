@@ -5,7 +5,6 @@ import Stripe from "stripe";
 
 import { env } from "~/env"; // Ensure this import is correct and env is typed
 
-
 import {
   createTransaction,
   getEmailByStripeCustomerId,
@@ -91,14 +90,20 @@ async function handleStripeWebhook(req: NextRequest) {
 
         const productName = product?.name ?? "Unknown Product";
 
-        // Ensure customerEmail and productName are non-null and non-undefined
+        const subscription =
+          await stripe.subscriptions.retrieve(stripeSubscriptionId);
+        const startDate = subscription.current_period_start;
+        const endDate = subscription.current_period_end;
 
+        // Ensure customerEmail and productName are non-null and non-undefined
         if (customerEmail && productName) {
           await createTransaction({
             email: customerEmail,
             plan: productName,
             stripeCustomerId,
             stripeSubscriptionId,
+            startDate,
+            endDate,
           });
         } else {
           // Handle the case when customerEmail or productName is null or undefined

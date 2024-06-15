@@ -83,7 +83,7 @@ export default async function RootLayout({
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
                         align="end"
-                        className="mt-1 bg-white p-1"
+                        className="mt-1 flex flex-col gap-2 bg-white p-2"
                       >
                         <Link href={"/profile"}>
                           <DropdownMenuItem className="hover:cursor-pointer hover:bg-gray-300">

@@ -1,3 +1,7 @@
+import moment from "moment";
+
+import { plans, type Plan } from "~/app/_components/plans";
+
 import { db } from "../db";
 
 async function createTransaction({
@@ -5,11 +9,15 @@ async function createTransaction({
   plan,
   stripeCustomerId,
   stripeSubscriptionId,
+  startDate,
+  endDate,
 }: {
   email: string;
   plan: string;
   stripeCustomerId: string;
   stripeSubscriptionId: string;
+  startDate: number; // Timestamp in milliseconds
+  endDate: number; // Timestamp in milliseconds
 }) {
   try {
     // Find the user based on their email
@@ -43,6 +51,8 @@ async function createTransaction({
         userId: user.id,
         plan,
         stripeSubscriptionId,
+        startDate,
+        endDate,
       },
     });
 
@@ -160,9 +170,22 @@ function hasReachedLimit({
   }
 }
 
+function convertTimestampToDate(timestamp: number): string {
+  // Convert the timestamp from seconds to the desired format
+  return moment.unix(timestamp).format("DD MMMM YYYY");
+}
+
+function getPlanByName(planName: string): Plan | undefined {
+  return plans.find(
+    (plan) => plan.name.toLowerCase() === planName.toLowerCase(),
+  );
+}
+
 export {
   createTransaction,
   getEmailByStripeCustomerId,
   handleSubscriptionDeleted,
   hasReachedLimit,
+  convertTimestampToDate,
+  getPlanByName,
 };

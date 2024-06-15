@@ -44,7 +44,7 @@ export const PlanCard: React.FC<PlanCardProps> = async ({
 
   return (
     <Card
-      className={classNames({
+      className={classNames("justify-between", {
         "relative border-2 border-purple-500": isFeatured,
       })}
     >

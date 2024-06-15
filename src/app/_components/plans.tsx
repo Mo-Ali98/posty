@@ -1,4 +1,13 @@
-export const plans = [
+export interface Plan {
+  name: string;
+  description: string;
+  link: string;
+  priceId: string;
+  price: number;
+  duration: string;
+}
+
+export const plans: Plan[] = [
   {
     name: "Basic",
     description: "Perfect for individuals and small teams.",

@@ -1,10 +1,12 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { getServerAuthSession } from "~/server/auth";
+import { convertTimestampToDate, getPlanByName } from "~/server/utils/utils";
 import { api } from "~/trpc/server";
 
 import { Avatar, AvatarImage } from "../_components/avatar";
-import { Button } from "../_components/button";
+import { Button, LinkButton } from "../_components/button";
 import {
   Card,
   CardContent,
@@ -16,6 +18,7 @@ import {
 import { MessageCircleIcon } from "../_components/icons";
 import { Input } from "../_components/input";
 import { Label } from "../_components/label";
+import { Separator } from "../_components/separator";
 import {
   Tooltip,
   TooltipContent,
@@ -36,26 +39,18 @@ export default async function ProfilePage() {
 
   return (
     <div className="container m-auto mt-5 flex h-full max-w-2xl flex-col gap-8 px-2">
-      <header className="flex items-center gap-4 rounded-md bg-gray-100 p-6">
+      <header className="flex items-center gap-4 rounded-lg bg-gray-100 p-6">
         <Avatar className="h-10 w-10">
           <AvatarImage src={session.user.image ?? ""} />
         </Avatar>
 
         <div className="grid gap-1">
-          <div className="text-xl font-bold">{session?.user?.name}</div>
+          <div className="text-2xl">{session?.user?.name}</div>
         </div>
       </header>
       <main className="grid flex-1 gap-8">
         <div className="grid gap-8 md:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>About Me</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-4">
-              <p className=""></p>
-              <div />
-            </CardContent>
-          </Card>
+          <SubscriptionCard />
           <Card>
             <CardHeader>
               <CardTitle>My Activity</CardTitle>
@@ -120,5 +115,73 @@ export default async function ProfilePage() {
         </Card>
       </main>
     </div>
+  );
+}
+
+async function SubscriptionCard() {
+  const billing = await api.billing.getBillingData();
+  const currentPlan = getPlanByName(billing?.plan ?? "");
+
+  if (!currentPlan || !billing) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Subscription</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="space-y-2">
+            <div className="text-xl font-bold">
+              You&apos;re not subscribed yet
+            </div>
+            <p className="text-muted-foreground">
+              To get started, head over to our{" "}
+              <Link
+                href="/pricing"
+                className="text-[hsl(280,100%,70%)] hover:underline"
+                prefetch={false}
+              >
+                pricing page
+              </Link>{" "}
+              and choose a plan that fits your needs.
+            </p>
+          </div>
+          <Separator />
+          <LinkButton href="/pricing" className="w-full" text="Go to Pricing" />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Subscription</CardTitle>
+      </CardHeader>
+      <CardContent className="grid gap-4">
+        <div className="flex flex-row justify-between">
+          <p className="text-lg font-medium text-[hsl(280,100%,70%)]">
+            {currentPlan?.name} Plan
+          </p>
+          <p className="font-medium">
+            £{currentPlan?.price} {currentPlan?.duration}
+          </p>
+        </div>
+        <Separator className="bg-slate-200" />
+        <div className="flex flex-row justify-between">
+          <div>
+            <div className="font-medium">Started on</div>
+            <div className="text-muted-foreground text-sm">
+              <p>{convertTimestampToDate(billing?.startDate ?? 0)}</p>
+            </div>
+          </div>
+          <div>
+            <div className="font-medium">Renews on</div>
+            <div className="text-muted-foreground text-sm">
+              <p>{convertTimestampToDate(billing?.endDate ?? 0)}</p>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
