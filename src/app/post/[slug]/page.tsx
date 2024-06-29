@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="p-4">
+    <div className="flex-1 p-4">
       <Card className="mx-auto mt-5 max-w-3xl p-6 sm:p-6 md:p-8 lg:p-10">
         <div className="not-prose space-y-4">
           <h1 className="text-3xl font-bold tracking-tight text-[hsl(280,100%,70%)] lg:text-4xl">

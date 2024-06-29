@@ -186,7 +186,7 @@ export default async function Home() {
                 </p>
               </div>
             </div>
-            <div className="mx-auto max-w-5xl">
+            <div className="mx-auto max-w-xs md:max-w-5xl">
               <MarqueeDemo />
             </div>
           </div>
@@ -261,7 +261,7 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center text-white">
+    <main className="flex flex-1 flex-col items-center justify-center text-white">
       <div className="container flex flex-col justify-center gap-4 px-4">
         <GradualSpacing
           className="font-display text-center text-2xl font-bold tracking-[-0.1em] text-black md:text-7xl md:leading-[5rem] dark:text-white"

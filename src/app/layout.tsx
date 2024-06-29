@@ -41,7 +41,7 @@ export default async function RootLayout({
       <Analytics />
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider>
-          <div className="min-h-screen bg-gradient-to-b from-[#2e026d] to-[#15162c]">
+          <div className="flex min-h-screen flex-col bg-gradient-to-b from-[#2e026d] to-[#15162c]">
             <nav className="sticky top-0 z-10 flex items-center justify-between bg-[#2e026d] p-4 shadow">
               <Link href="/" className="flex items-center">
                 <FeatherIcon className="h-6 w-6 text-[hsl(280,100%,70%)]" />
@@ -113,7 +113,7 @@ export default async function RootLayout({
                 )}
               </div>
             </nav>
-            <main className="min-h-screen"> {children}</main>
+            <main className="flex flex-1 overflow-y-auto">{children}</main>
             <footer className="py-2 text-center text-white">
               This is the footer. © {new Date().getFullYear()} My App. All
               rights reserved.

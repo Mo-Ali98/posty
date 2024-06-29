@@ -38,7 +38,7 @@ export default async function ProfilePage() {
   });
 
   return (
-    <div className="container m-auto mt-5 flex h-full max-w-2xl flex-col gap-8 px-2">
+    <div className="m-auto flex h-full max-w-2xl flex-1 flex-col gap-8 px-2">
       <header className="flex items-center gap-4 rounded-lg bg-gray-100 p-6">
         <Avatar className="h-10 w-10">
           <AvatarImage src={session.user.image ?? ""} />

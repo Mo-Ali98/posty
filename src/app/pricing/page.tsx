@@ -18,7 +18,7 @@ export default async function PricingPage() {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center gap-12 p-4 text-white">
+    <div className="flex flex-1 flex-col items-center justify-center gap-12 p-4 text-white">
       <GradualSpacing
         className="font-display text-center text-4xl font-bold tracking-[-0.1em] text-[hsl(280,100%,70%)] md:text-7xl md:leading-[5rem] "
         text={`Pricing`}
