@@ -181,6 +181,78 @@ function getPlanByName(planName: string): Plan | undefined {
   );
 }
 
+export async function handleSubscriptionUpdate({
+  email,
+  plan,
+  stripeCustomerId,
+  stripeSubscriptionId,
+  startDate,
+  endDate,
+}: {
+  email: string;
+  plan: string;
+  stripeCustomerId: string;
+  stripeSubscriptionId: string;
+  startDate: number; // Timestamp in milliseconds
+  endDate: number; // Timestamp in milliseconds
+}): Promise<void> {
+  try {
+    // Find the user based on their email
+    const user = await db.user.findUnique({
+      where: { email },
+      include: { accounts: true }, // Include related accounts
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Get the account associated with the user that matches the Stripe customer ID
+    const account = user.accounts.find(
+      (acc) => acc.stripeCustomerId === stripeCustomerId,
+    );
+
+    if (!account) {
+      throw new Error("User account not found");
+    }
+
+    // Find the billing record based on stripeSubscriptionId
+    const billingRecord = await db.billing.findFirst({
+      where: {
+        stripeSubscriptionId: stripeSubscriptionId,
+        user: {
+          email: email, // Optional: Include userEmail if available
+        },
+      },
+    });
+
+    if (!billingRecord) {
+      console.error(
+        `Billing record not found for subscriptionId: ${stripeSubscriptionId} for email ${email}`,
+      );
+      return;
+    }
+
+    // Perform the update
+    const updatedBillingRecord = await db.billing.update({
+      where: { id: billingRecord.id },
+      data: {
+        // Update fields as needed
+        plan,
+        startDate, // Example: Replace with actual updated start date logic
+        endDate, // Example: Replace with actual updated end date logic
+        updatedAt: new Date(), // Update updatedAt field
+      },
+    });
+
+    console.log(
+      `Billing record updated successfully: ${updatedBillingRecord.id}`,
+    );
+  } catch (error) {
+    console.error("Error updating billing record:", error);
+  }
+}
+
 export {
   createTransaction,
   getEmailByStripeCustomerId,

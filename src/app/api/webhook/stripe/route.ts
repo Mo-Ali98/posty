@@ -9,6 +9,7 @@ import {
   createTransaction,
   getEmailByStripeCustomerId,
   handleSubscriptionDeleted,
+  handleSubscriptionUpdate,
 } from "../../../../server/utils/utils";
 // Initialize Stripe
 const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
@@ -139,6 +140,48 @@ async function handleStripeWebhook(req: NextRequest) {
           stripeCustomerId,
           stripeSubscriptionId,
         });
+        break;
+      }
+
+      case "customer.subscription.updated": {
+        const subscription = event.data.object;
+        const stripeSubscriptionId = subscription.id;
+        const stripeCustomerId = subscription.customer as string;
+
+        const productId = subscription.items.data[0]?.price?.product as string;
+
+        const startDate = subscription.current_period_start;
+        const endDate = subscription.current_period_end;
+
+        if (!productId) {
+          console.log("Product ID not found for the line item.");
+        }
+
+        // Fetch product details from Stripe
+        const product = await stripe.products.retrieve(productId);
+
+        const productName = product?.name ?? "Unknown Product";
+
+        // Fetch customer details from Stripe
+        const email = await getEmailByStripeCustomerId(stripeCustomerId);
+
+        if (!email) {
+          return NextResponse.json(
+            { error: "Customer email not found - ", email },
+            { status: 400 },
+          );
+        }
+
+        // Update the billing record
+        await handleSubscriptionUpdate({
+          email,
+          plan: productName,
+          stripeCustomerId,
+          stripeSubscriptionId,
+          startDate,
+          endDate,
+        });
+
         break;
       }
 
