@@ -119,7 +119,11 @@ export default async function ProfilePage() {
 }
 
 async function SubscriptionCard() {
-  const billing = await api.billing.getBillingData();
+  const session = await getServerAuthSession();
+
+  const billing = await api.billing.getBillingDataByUserId({
+    userId: session?.user?.id ?? "",
+  });
   const currentPlan = getPlanByName(billing?.plan ?? "");
 
   if (!currentPlan || !billing) {
